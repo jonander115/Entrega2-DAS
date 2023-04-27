@@ -1,0 +1,43 @@
+<resources>
+
+    <string name="app_name">TuneSongPlayer</string>
+
+    <string name="bienvenido">¡Bienvenido a TuneSongPlayer!</string>
+    <string name="bt_IniciarSesion">Iniciar sesión</string>
+    <string name="tv_AunNoTienesCuenta">¿Aún no tienes cuenta?</string>
+    <string name="bt_Registrarse">Registrarse</string>
+
+    <string name="tv_IntroducirDatosInicioSesion">Introduce tus datos para iniciar sesión</string>
+    <string name="tv_NombreUsuario">Nombre de usuario:</string>
+    <string name="tv_Contraseña">Contraseña:</string>
+
+    <string name="tv_IntroducirDatosRegistro">Introduce tus datos para registrarte</string>
+    <string name="tv_NoCambiarUsuario">No podrás cambiar tu nombre de usuario y contraseña más tarde</string>
+    <string name="tv_NombreRegistro">Nombre:</string>
+    <string name="tv_ApellidosRegistro">Apellidos:</string>
+    <string name="tv_EmailRegistro">e-mail:</string>
+    <string name="tv_RepetirContraseña">Repetir contraseña:</string>
+
+    <string name="BuscaUnaCancion">Busca una canción...</string>
+    <string name="tv_TusPlaylists">Playlists de</string>
+    <string name="bt_NuevaPlaylist">Nueva playlist</string>
+
+    <string name="tv_PerfilUsuario">Perfil de usuario</string>
+    <string name="tv_ModificarInformacion">Aquí puedes ver y modificar la información de tu perfil</string>
+    <string name="bt_GuardarCambios">Guardar cambios</string>
+
+    <string name="bt_Añadir">Añadir</string>
+    <string name="bt_Eliminar">Eliminar</string>
+
+    <string name="tv_ResultadosBusqueda">Estos son los resultados de tu búsqueda</string>
+
+    <string name="bt_CodigoFuente">Ver código fuente de la aplicación</string>
+
+    <string name="bt_AñadirPlaylist">Nueva playlist</string>
+    <string name="bt_EliminarPlaylist">Eliminar playlist</string>
+
+    <string name="tv_CancionesPlaylist">Playlist</string>
+    <string name="bt_SacarFoto">Poner una foto de cámara</string>
+    <string name="bt_ElegirDeGaleria">Elegir foto de galería</string>
+
+</resources>

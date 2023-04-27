@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Registrarse">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="358dp"
+        android:layout_height="631dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutPagPrincipal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/logo3_TuneSongPlayer"
+                android:layout_width="79dp"
+                android:layout_height="78dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.081"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logotunesongplayer" />
+
+            <TextView
+                android:id="@+id/tv_IntroducirDatosRegistro"
+                android:layout_width="227dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:text="@string/tv_IntroducirDatosRegistro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/logo3_TuneSongPlayer"
+                tools:layout_editor_absoluteY="58dp" />
+
+            <TextView
+                android:id="@+id/tv_NoCambiarUsuario"
+                android:layout_width="332dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/tv_NoCambiarUsuario"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_IntroducirDatosRegistro"
+                tools:layout_editor_absoluteY="58dp" />
+
+            <TextView
+                android:id="@+id/tv_NombreRegistro"
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="@string/tv_NombreRegistro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.112"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_IntroducirDatosRegistro" />
+
+            <EditText
+                android:id="@+id/et_NombreRegistro"
+                android:layout_width="331dp"
+                android:layout_height="44dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_NombreRegistro" />
+
+            <TextView
+                android:id="@+id/tv_ApellidosRegistro"
+                android:layout_width="84dp"
+                android:layout_height="17dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/tv_ApellidosRegistro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.108"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_NombreRegistro" />
+
+            <EditText
+                android:id="@+id/et_ApellidosRegistro"
+                android:layout_width="333dp"
+                android:layout_height="46dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ApellidosRegistro" />
+
+            <TextView
+                android:id="@+id/tv_EmailRegistro"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/tv_EmailRegistro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.105"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_ApellidosRegistro" />
+
+            <EditText
+                android:id="@+id/et_EmailRegistro"
+                android:layout_width="335dp"
+                android:layout_height="44dp"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_EmailRegistro" />
+
+            <TextView
+                android:id="@+id/tv_NombreUsuarioRegistro"
+                android:layout_width="142dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/tv_NombreUsuario"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.135"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_EmailRegistro" />
+
+            <EditText
+                android:id="@+id/et_NombreUsuarioRegistro"
+                android:layout_width="333dp"
+                android:layout_height="41dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_NombreUsuarioRegistro" />
+
+            <TextView
+                android:id="@+id/tv_ContraseñaRegistro"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/tv_Contraseña"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.119"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_NombreUsuarioRegistro" />
+
+            <EditText
+                android:id="@+id/et_ContraseñaRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.184"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ContraseñaRegistro" />
+
+            <TextView
+                android:id="@+id/tv_RepetirContraseñaRegistro"
+                android:layout_width="162dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/tv_RepetirContraseña"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.148"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_ContraseñaRegistro" />
+
+            <EditText
+                android:id="@+id/et_RepetirContraseñaRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.184"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_RepetirContraseñaRegistro" />
+
+            <Button
+                android:id="@+id/bt_Registrarse2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="onClick_Registrarse"
+                android:text="@string/bt_Registrarse"
+                tools:layout_editor_absoluteX="15dp"
+                tools:layout_editor_absoluteY="49dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

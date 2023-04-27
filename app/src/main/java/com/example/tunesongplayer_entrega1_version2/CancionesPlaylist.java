@@ -6,7 +6,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
@@ -16,17 +15,11 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import android.Manifest;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -66,8 +59,7 @@ public class CancionesPlaylist extends AppCompatActivity {
     private Uri uriFoto;
     private int CODIGO_FOTO_ARCHIVO = 12;
     private byte[] byteArrayFotoPlaylist;
-    private boolean sonandoMusica;
-    private MediaPlayer musicaMP3;
+    private boolean sonandoMusica = false;
 
 
     //Se recoge la foto hecha con la cámara y se pone en el ImageView correspondiente
@@ -168,8 +160,6 @@ public class CancionesPlaylist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canciones_playlist);
 
-        sonandoMusica = false;
-
 
         //Recogemos elementos de la vista
         fotoPlaylist = (ImageView) findViewById(R.id.fotoEnListaCancionesPlaylist);
@@ -227,41 +217,24 @@ public class CancionesPlaylist extends AppCompatActivity {
 
                 //Ponemos / Paramos la música
                 if (sonandoMusica==false){
-                    musicaMP3 = iniciarMusica(nombreCancionDePlaylistPulsada);
-                    musicaMP3.start();
+
+                    //La versión de la aplicación siempre va a ser mayor o igual a la Oreo
+                    //Por lo tanto, lanzamos el servicio con startForegroundService
+                    Intent intentServicioMusica = new Intent(getApplicationContext(),MusicService.class);
+                    intentServicioMusica.putExtra("nombreCancion",nombreCancionDePlaylistPulsada);
+                    intentServicioMusica.putExtra("autorCancion",autorCancionDePlaylistPulsada);
+
+                    //Llamamos al servicio
+                    startForegroundService(intentServicioMusica);
                     sonandoMusica = true;
                 }
                 else{
-                    musicaMP3.stop();
+                    //Paramos el servicio
+                    Intent intentServicioMusica = new Intent(getApplicationContext(),MusicService.class);
+                    stopService(intentServicioMusica);
                     sonandoMusica = false;
                 }
 
-
-
-                //Definimos el Manager y el Builder
-                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "canal1");
-
-                //El Builder nos permite definir las características de la notificación
-                builder.setSmallIcon(android.R.drawable.stat_sys_headset)
-                        .setContentTitle("Escuchando música")
-                        .setContentText("Escuchando " + nombreCancionDePlaylistPulsada + " de " + autorCancionDePlaylistPulsada)
-                        .setSubText("De tu playlist " + playlist)
-                        .setAutoCancel(true);
-
-                //las versiones mayores que la Oreo necesitan un canal
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    NotificationChannel canal = new NotificationChannel("canal1", "CanalNotificacionPlaylist", NotificationManager.IMPORTANCE_DEFAULT);
-
-                    canal.setDescription("Canal de audio de playlist");
-                    canal.setLightColor(Color.BLUE);
-
-                    //Unimos el canal al manager
-                    manager.createNotificationChannel(canal);
-
-                    //El manager lanza la notificación
-                    manager.notify(1, builder.build());
-                }
 
             }
         });
@@ -566,25 +539,6 @@ public class CancionesPlaylist extends AppCompatActivity {
         }
     }
 
-
-    //Método para reproducir la canción pulsada
-    public MediaPlayer iniciarMusica(String nombreCancion){
-
-        musicaMP3 = new MediaPlayer();
-        if (nombreCancion.equals("Boundless space")){
-            musicaMP3 = MediaPlayer.create(this, R.raw.boundlessspace);
-        }
-        else if (nombreCancion.equals("Closer to the sun")) {
-            musicaMP3 = MediaPlayer.create(this, R.raw.closertothesun);
-        }
-        else if (nombreCancion.equals("Plain")) {
-            musicaMP3 = MediaPlayer.create(this, R.raw.plain);
-        }
-        else{
-            musicaMP3 = MediaPlayer.create(this, R.raw.boundlessspace);
-        }
-        return musicaMP3;
-    }
 
 
 }

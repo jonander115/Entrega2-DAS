@@ -1,7 +1,6 @@
 package com.example.tunesongplayer_entrega1_version2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.work.Data;
@@ -9,12 +8,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.graphics.Color;
-import android.media.MediaPlayer;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,15 +20,12 @@ public class CancionesBuscadas extends AppCompatActivity {
 
     private String cancionBuscada;
     private String usuario;
-    private boolean sonandoMusica;
-    private MediaPlayer musicaMP3;
+    private boolean sonandoMusica = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canciones_buscadas);
-
-        sonandoMusica = false;
 
         //Recogemos la canción buscada, que nos viene dada desde la actividad de la página principal
         Bundle extras = getIntent().getExtras();
@@ -125,38 +116,22 @@ public class CancionesBuscadas extends AppCompatActivity {
 
                 //Ponemos / Paramos la música
                 if (sonandoMusica==false){
-                    musicaMP3 = iniciarMusica(nombreCancionDelBotonPulsado);
-                    musicaMP3.start();
+
+                    //La versión de la aplicación siempre va a ser mayor o igual a la Oreo
+                    //Por lo tanto, lanzamos el servicio con startForegroundService
+                    Intent intentServicioMusica = new Intent(getApplicationContext(),MusicService.class);
+                    intentServicioMusica.putExtra("nombreCancion",cancionBuscada);
+                    intentServicioMusica.putExtra("autorCancion",autorCancionDelBotonPulsado);
+
+                    //Llamamos al servicio
+                    startForegroundService(intentServicioMusica);
                     sonandoMusica = true;
                 }
                 else{
-                    musicaMP3.stop();
+                    //Paramos el servicio
+                    Intent intentServicioMusica = new Intent(getApplicationContext(),MusicService.class);
+                    stopService(intentServicioMusica);
                     sonandoMusica = false;
-                }
-
-                //Definimos el Manager y el Builder
-                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "canal2");
-
-                //El Builder nos permite definir las características de la notificación
-                builder.setSmallIcon(android.R.drawable.stat_sys_headset)
-                        .setContentTitle("Escuchando música")
-                        .setContentText("Escuchando " + nombreCancionDelBotonPulsado + " de " + autorCancionDelBotonPulsado)
-                        .setSubText("Has encontrado esta canción buscando: " + cancionBuscada)
-                        .setAutoCancel(true);
-
-                //las versiones mayores que la Oreo necesitan un canal
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    NotificationChannel canal = new NotificationChannel("canal2", "CanalNotificacionBuscador", NotificationManager.IMPORTANCE_DEFAULT);
-
-                    canal.setDescription("Canal de audio del buscador");
-                    canal.setLightColor(Color.GREEN);
-
-                    //Unimos el canal al manager
-                    manager.createNotificationChannel(canal);
-
-                    //El manager lanza la notificación
-                    manager.notify(2, builder.build());
                 }
 
             }
@@ -208,29 +183,6 @@ public class CancionesBuscadas extends AppCompatActivity {
         WorkManager.getInstance(this).enqueue(otwr);
 
 
-    }
-
-
-
-
-
-    public MediaPlayer iniciarMusica(String nombreCancion){
-
-        musicaMP3 = new MediaPlayer();
-        if (nombreCancion.equals("Boundless space")){
-            musicaMP3 = MediaPlayer.create(this, R.raw.boundlessspace);
-        }
-        else if (nombreCancion.equals("Closer to the sun")) {
-            musicaMP3 = MediaPlayer.create(this, R.raw.closertothesun);
-        }
-        else if (nombreCancion.equals("Plain")) {
-            musicaMP3 = MediaPlayer.create(this, R.raw.plain);
-        }
-        else{
-            musicaMP3 = MediaPlayer.create(this, R.raw.boundlessspace);
-        }
-
-        return musicaMP3;
     }
 
 

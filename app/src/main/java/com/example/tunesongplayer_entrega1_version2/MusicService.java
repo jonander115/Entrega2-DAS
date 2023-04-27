@@ -24,7 +24,6 @@ public class MusicService extends Service {
     private MediaPlayer musicaMP3;
     private String nombreCancion;
     private String autorCancion;
-    private boolean sonandoMusica = false;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

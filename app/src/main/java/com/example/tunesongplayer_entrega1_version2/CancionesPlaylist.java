@@ -505,7 +505,6 @@ public class CancionesPlaylist extends AppCompatActivity {
         else{
             musicaMP3 = MediaPlayer.create(this, R.raw.boundlessspace);
         }
-
         return musicaMP3;
     }
 

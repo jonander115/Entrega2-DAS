@@ -1,5 +1,6 @@
 package com.example.tunesongplayer_entrega1_version2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -10,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +39,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    //Método que sobreescribimos para gestionar la decisión del usuario tras responder al diálogo de los permisos
+    //Los permisos de notificaciones solo se piden si la versión es mayor o igual a Android 13
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch(requestCode) {
+
+            case CODIGO_DE_PERMISO_NOTIFICACIONES: {
+                // Si la petición se cancela, granResults estará vacío
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //Permiso concedido, se pueden recibir notificaciones
+                } else {
+                    // PERMISO DENEGADO
+                    Toast.makeText(getApplicationContext(), "No se pueden recibir notificaciones", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
+
 
     //Método para cuando se haga click en el botón para Iniciar sesión
     public void bt_IniciarSesion_onClick(View v) {

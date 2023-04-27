@@ -62,7 +62,7 @@ public class MusicService extends Service {
         if (nombreCancion.equalsIgnoreCase("Boundless space")){
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/boundlessspace.mp3"));
         }
-        if (nombreCancion.equalsIgnoreCase("Burning fire")){
+        else if (nombreCancion.equalsIgnoreCase("Burning fire")){
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/burningfire.mp3"));
         }
         else if (nombreCancion.equalsIgnoreCase("Closer to the sun")) {

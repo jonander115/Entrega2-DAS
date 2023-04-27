@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -58,35 +59,38 @@ public class MusicService extends Service {
 
 
         //Reproducimos el archivp mp3 del servidor correspondiente a la canción recibida
-        if (nombreCancion.equals("Boundless space")){
+        if (nombreCancion.equalsIgnoreCase("Boundless space")){
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/boundlessspace.mp3"));
         }
-        if (nombreCancion.equals("Burning fire")){
+        if (nombreCancion.equalsIgnoreCase("Burning fire")){
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/burningfire.mp3"));
         }
-        else if (nombreCancion.equals("Closer to the sun")) {
+        else if (nombreCancion.equalsIgnoreCase("Closer to the sun")) {
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/closertothesun.mp3"));
         }
-        else if (nombreCancion.equals("Faster, stronger")) {
+        else if (nombreCancion.equalsIgnoreCase("Faster, stronger")) {
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/fasterstronger.mp3"));
         }
-        else if (nombreCancion.equals("Get what you want")) {
+        else if (nombreCancion.equalsIgnoreCase("Get what you want")) {
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/getwhatyouwant.mp3"));
         }
-        else if (nombreCancion.equals("Hit the ground")) {
+        else if (nombreCancion.equalsIgnoreCase("Hit the ground")) {
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/hittheground.mp3"));
         }
-        else if (nombreCancion.equals("Plain")) {
+        else if (nombreCancion.equalsIgnoreCase("Plain")) {
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/plain.mp3"));
         }
-        else if (nombreCancion.equals("Rabbits Hop")) {
+        else if (nombreCancion.equalsIgnoreCase("Rabbits Hop")) {
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/rabbitshop.mp3"));
         }
-        else if (nombreCancion.equals("Rock and dust")) {
+        else if (nombreCancion.equalsIgnoreCase("Rock and dust")) {
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/rockanddust.mp3"));
         }
-        else if (nombreCancion.equals("Slider")) {
+        else if (nombreCancion.equalsIgnoreCase("Slider")) {
             musicaMP3 = MediaPlayer.create(this, Uri.parse("http://ec2-54-93-62-124.eu-central-1.compute.amazonaws.com/jlopezdeahumad001/WEB/Canciones/slider.mp3"));
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No se puede reproducir el audio", Toast.LENGTH_LONG).show();
         }
 
 

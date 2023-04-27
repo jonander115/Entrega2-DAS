@@ -3,8 +3,11 @@ package com.example.tunesongplayer_entrega1_version2;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
 import androidx.work.Data;
@@ -12,10 +15,12 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -52,6 +57,8 @@ import java.util.Map;
 
 public class CancionesPlaylist extends AppCompatActivity {
 
+    private final int CODIGO_DE_PERMISOS_SACARFOTO = 1;
+    private final int CODIGO_DE_PERMISO_LECTURA_GALERIA = 2;
     private String playlist;
     private String usuario;
     private ListView listaCancionesPlaylist;
@@ -315,6 +322,27 @@ public class CancionesPlaylist extends AppCompatActivity {
     //Método para sacar una foto y ponerla como imagen de la playlist
     public void onClick_SacarFoto(View v){
 
+        //Necesitamos permisos de cámara y de escritura en galería
+
+        //Si ambos permisos están concedidos
+        if ( (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        && (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) ) {
+
+            lanzarIntentFoto();
+
+        }
+        else{ //Si algún permiso, o los dos, no están concedidos
+
+            //Pedimos los permisos
+            String[] permisos = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
+            ActivityCompat.requestPermissions(this,permisos, CODIGO_DE_PERMISOS_SACARFOTO);
+
+        }
+
+    }
+
+
+    private void lanzarIntentFoto(){
         //Antes de lanzar el Intent hay que preparar el fichero donde se guardará la foto
         //Utilizamos un FileProvider (definido en res/xml/file_provider.xml)
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -336,12 +364,25 @@ public class CancionesPlaylist extends AppCompatActivity {
         Intent intentFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intentFoto.putExtra(MediaStore.EXTRA_OUTPUT, uriFoto); //Le mandamos al Intent la uri del fichero donde se almacenará la foto
         startActivityForResult(intentFoto,CODIGO_FOTO_ARCHIVO);
-
     }
 
 
     //Método para elegir una imagen de la galería y ponerla como imagen de la playlist
     public void onClick_ElegirGaleria(View v){
+
+        //Comprobamos si el permiso de lectura de galería está concedido
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            //El permiso no está concedido, lo pedimos
+            String[] permisos = new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(this,permisos, CODIGO_DE_PERMISO_LECTURA_GALERIA);
+        }
+        else{
+            lanzarIntentGaleria();
+        }
+
+    }
+
+    private void lanzarIntentGaleria(){
         //Construimos el builder para lanzar la selección de imagen
 
         //He adaptado código presente en https://stackoverflow.com/questions/73999566/how-to-construct-pickvisualmediarequest-for-activityresultlauncher
@@ -353,6 +394,43 @@ public class CancionesPlaylist extends AppCompatActivity {
                 .setMediaType(mediaType)
                 .build());
     }
+
+
+
+    //Método que sobreescribimos para gestionar la decisión del usuario tras responder al diálogo de los permisos
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch(requestCode){
+
+            case CODIGO_DE_PERMISOS_SACARFOTO: {
+                // Si la petición se cancela, granResults estará vacío
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    lanzarIntentFoto();
+                }
+                else {
+                    // PERMISO DENEGADO
+                    Toast.makeText(getApplicationContext(), "No se puede ejecutar la funcionalidad", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            case CODIGO_DE_PERMISO_LECTURA_GALERIA: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    lanzarIntentGaleria();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "No se puede ejecutar la funcionalidad", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
+    }
+
+
+
+
 
 
     //Método para eliminar una canción de una playlist cuando el usuario acepta el diálogo dedicado a ello

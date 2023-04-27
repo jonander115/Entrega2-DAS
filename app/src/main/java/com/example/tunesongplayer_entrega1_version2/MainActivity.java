@@ -14,9 +14,6 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     private final int CODIGO_DE_PERMISO_NOTIFICACIONES = 10;
-    private final int CODIGO_DE_PERMISO_CAMARA = 1;
-    private final int CODIGO_DE_PERMISO_LECTURA = 2;
-    private final int CODIGO_DE_PERMISO_ESCRITURA = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,33 +33,6 @@ public class MainActivity extends AppCompatActivity {
                 String[] permisos = new String[]{android.Manifest.permission.POST_NOTIFICATIONS};
                 ActivityCompat.requestPermissions(this, permisos, CODIGO_DE_PERMISO_NOTIFICACIONES);
             }
-        }
-
-        //También hay que pedir el permiso de cámara por si el usuario quiere cambiar la foto de la playlist, y
-        // los permisos de lectura y escritura de galería para poder elegir una imagen y guardar las fotos hechas
-
-        //Comprobamos si el permiso de cámara está concedido
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-
-            //El permiso no está concedido, lo pedimos
-            String[] permisos = new String[] {android.Manifest.permission.CAMERA};
-            ActivityCompat.requestPermissions(this,permisos, CODIGO_DE_PERMISO_CAMARA);
-        }
-
-        //Comprobamos si el permiso de lectura de galería está concedido
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-            //El permiso no está concedido, lo pedimos
-            String[] permisos = new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(this,permisos, CODIGO_DE_PERMISO_LECTURA);
-        }
-
-        //Comprobamos si el permiso de escritura de galería está concedido
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-            //El permiso no está concedido, lo pedimos
-            String[] permisos = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(this,permisos, CODIGO_DE_PERMISO_ESCRITURA);
         }
 
 

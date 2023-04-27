@@ -42,7 +42,7 @@ public class DialogEliminarCancionDePlaylist extends DialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 //Eliminamos la canción de la playlist (el método está en la actividad CancionesPlaylist)
-                //(No he podido hacer la llamada al servicio web desde el diálogo porque había problemas con el contexto de la aplicación)
+                //(No he podido hacer la llamada al servicio web desde el diálogo porque había problemas con el LifecycleOwner que necesita WorkManager)
                 ((CancionesPlaylist) getActivity()).eliminarCancionDePlaylist(cancion, autor);
 
                 dismiss();

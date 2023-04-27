@@ -51,7 +51,7 @@ public class DialogNuevaPlaylist extends DialogFragment {
                     String nombrePlaylist = et_NombreNuevaPlaylist.getText().toString();
 
                     //Llamamos al método de la página principal de la aplicación encargado de crear la playlist
-                    //(No he podido hacer la llamada al servicio web desde el diálogo porque había problemas con el contexto de la aplicación)
+                    //(No he podido hacer la llamada al servicio web desde el diálogo porque había problemas con el LifecycleOwner que necesita WorkManager)
                     ((PagPrincipal) getActivity()).nuevaPlaylist(nombrePlaylist);
 
                     dismiss();

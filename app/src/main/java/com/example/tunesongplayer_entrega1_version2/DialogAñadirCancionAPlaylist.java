@@ -58,7 +58,7 @@ public class DialogAñadirCancionAPlaylist extends DialogFragment {
                     String nombrePlaylist = et_NombrePlaylistAAñadir.getText().toString();
 
                     //Llamamos al método de la actividad encargado de añadir la canción a la playlist
-                    //(No he podido hacer la llamada al servicio web desde el diálogo porque había problemas con el contexto de la aplicación)
+                    //(No he podido hacer la llamada al servicio web desde el diálogo porque había problemas con el LifecycleOwner que necesita WorkManager)
                     ((CancionesBuscadas) getActivity()).añadirAPlaylist(nombrePlaylist, cancion, autor);
 
                     dismiss();

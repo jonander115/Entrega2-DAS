@@ -74,7 +74,7 @@ public class DialogEliminarPlaylist extends DialogFragment {
                         String nombrePlaylistABorrar = listaNombresPlaylists[numeroOpcionElegida];
 
                         //Eliminamos la playlist (el método está en la página principal)
-                        //(No he podido hacer la llamada al servicio web desde el diálogo porque había problemas con el contexto de la aplicación)
+                        //(No he podido hacer la llamada al servicio web desde el diálogo porque había problemas con el LifecycleOwner que necesita WorkManager)
                         ((PagPrincipal) getActivity()).eliminarPlaylist(nombrePlaylistABorrar);
 
                     }
